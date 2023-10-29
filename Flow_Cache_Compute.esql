@@ -1,19 +1,28 @@
 
-DECLARE Shr_data SHARED ROW;
+DECLARE Cache_data SHARED ROW;
 
 CREATE COMPUTE MODULE Flow_Cache_Compute
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
-		-- CALL CopyMessageHeaders();
-		-- CALL CopyEntireMessage();
-		SET OutputRoot.XMLNSC.result.date = CURRENT_TIMESTAMP;
-		
-		 DECLARE shrData REFERENCE TO Shr_data;
-		 SET shrData.message1 = 'Hello1';
-		 SET shrData.message2 = 'Hello2';
-		 SET shrData.message3 = 'Hello3';
-		 SET Environment.Shr_data = shrData;
+	
+		-- Creat shared ROW Variable
+		-- Create Reference to shared row 
+		-- Copy data to share row ref 
+		-- Assign shared row ref to Environment
+		 DECLARE prepData REFERENCE TO Cache_data;
+		 SET prepData.data =  InputRoot.JSON.Data;
 		 
+		 SET Environment.Cache_data = prepData;
+		 
+--		 SET shrData.message1 = 'Hello1';
+--		 SET shrData.message2 = 'Hello2';
+--		 SET shrData.message3 = 'Hello3';
+--		 SET Environment.Shr_data = shrData;
+		 IF EXISTS(Environment.Cache_data[]) THEN
+		 	SET OutputRoot.JSON.Data.message = 'Created cache at '|| CAST(CURRENT_TIMESTAMP AS CHARACTER);
+		 ELSE
+		 	SET OutputRoot.JSON.Data.message = 'Failed to Create Cache';
+		 END IF;
 --		 IF EXISTS(LocalEnvironment.Scheduler[])THEN
 --		 	PROPAGATE TO TERMINAL 'out';
 --		 ELSE

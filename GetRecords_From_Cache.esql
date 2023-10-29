@@ -1,0 +1,18 @@
+
+
+CREATE COMPUTE MODULE GetRecords_From_Cache
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		-- Cache_data has been declared as SHARED row, refering direclty
+		DECLARE inRef REFERENCE TO Cache_data;
+		IF FIELDTYPE (inRef.data) IS NOT NULL THEN
+			-- DECLARE inRef REFERENCE TO Cache_data;
+			SET OutputRoot.JSON.Data.result = inRef;
+		ELSE
+			-- TO DO Instead throwing error call the funtion
+			THROW USER EXCEPTION CATALOG 'ERROR' MESSAGE 3145 VALUES ('No Cached Data');
+		END IF;
+		RETURN TRUE;
+	END;
+END MODULE;

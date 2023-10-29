@@ -3,47 +3,51 @@
     nsURI="Flow_Cache.msgflow" nsPrefix="Flow_Cache.msgflow">
   <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" nodeLayoutStyle="RECTANGLE">
     <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
-    <translation xmi:type="utility:TranslatableString" key="Flow_Cache" bundleName="Flow_Cache" pluginId="ACE_Cache"/>
-    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ACE_Cache/icons/full/obj16/Flow_Cache.gif"/>
-    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ACE_Cache/icons/full/obj30/Flow_Cache.gif"/>
+    <translation xmi:type="utility:TranslatableString" key="Flow_Cache" bundleName="Flow_Cache" pluginId="ACE_flow_Cache"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ACE_flow_Cache/icons/full/obj16/Flow_Cache.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ACE_flow_Cache/icons/full/obj30/Flow_Cache.gif"/>
     <composition>
-      <nodes xmi:type="ComIbmWSRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="291,339" URLSpecifier="http://localhost:4414/datav2/servers" httpMethod="GET" messageDomainProperty="JSON">
+      <nodes xmi:type="ComIbmWSRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="256,339" URLSpecifier="http://localhost:4414/datav2/servers" httpMethod="GET" messageDomainProperty="JSON">
         <translation xmi:type="utility:ConstantString" string="HTTP Request"/>
       </nodes>
       <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="519,339" computeExpression="esql://routine/#Flow_Cache_Compute.Main" computeMode="destinationAndMessage">
-        <translation xmi:type="utility:ConstantString" string="Compute"/>
+        <translation xmi:type="utility:ConstantString" string="Generate Cache Scheduler"/>
       </nodes>
-      <nodes xmi:type="ComIbmWSInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="30,434" URLSpecifier="/cache">
+      <nodes xmi:type="ComIbmWSInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="30,434" URLSpecifier="/createCache">
         <translation xmi:type="utility:ConstantString" string="HTTP Input"/>
       </nodes>
-      <nodes xmi:type="ComIbmScheduler.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_4" location="32,339" runOnceOnCheck="true" messageType="timeout">
+      <nodes xmi:type="ComIbmScheduler.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_4" location="32,339" interval="5" runOnceOnCheck="true" messageType="timeout">
         <translation xmi:type="utility:ConstantString" string="Scheduler"/>
       </nodes>
       <nodes xmi:type="ComIbmWSReply.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="622,18">
         <translation xmi:type="utility:ConstantString" string="HTTP Reply"/>
       </nodes>
-      <nodes xmi:type="ComIbmWSInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_9" location="20,20" URLSpecifier="/cache2">
+      <nodes xmi:type="ComIbmWSInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_9" location="20,20" URLSpecifier="/getRecords">
         <translation xmi:type="utility:ConstantString" string="HTTP Input1"/>
       </nodes>
-      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_10" location="301,17" computeExpression="esql://routine/#Flow_Cache_Compute1.Main" computeMode="destinationAndMessage">
-        <translation xmi:type="utility:ConstantString" string="Compute1"/>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_10" location="301,17" computeExpression="esql://routine/#GetRecords_From_Cache.Main" computeMode="destinationAndMessage">
+        <translation xmi:type="utility:ConstantString" string="GetRecords_From_Cache"/>
       </nodes>
       <nodes xmi:type="ComIbmMQOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_13" location="742,341" queueName="QL.OUT">
         <translation xmi:type="utility:ConstantString" string="MQ Output"/>
       </nodes>
-      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_16" location="281,429" computeExpression="esql://routine/#Flow_Cache_Compute.Main" computeMode="destinationAndMessage">
-        <translation xmi:type="utility:ConstantString" string="Compute2"/>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_16" location="495,434" computeExpression="esql://routine/#Flow_Cache_Compute.Main" computeMode="destinationAndMessage">
+        <translation xmi:type="utility:ConstantString" string="Generate Cache HTTP Invoke"/>
       </nodes>
-      <nodes xmi:type="ComIbmWSReply.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_17" location="559,430">
-        <translation xmi:type="utility:ConstantString" string="HTTP Reply1"/>
+      <nodes xmi:type="ComIbmWSReply.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_17" location="685,440">
+        <translation xmi:type="utility:ConstantString" string="HTTP Reply "/>
+      </nodes>
+      <nodes xmi:type="ComIbmWSRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_5" location="264,431" URLSpecifier="http://localhost:4414/datav2/servers" httpMethod="GET" messageDomainProperty="JSON">
+        <translation xmi:type="utility:ConstantString" string="HTTP Request1"/>
       </nodes>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_7" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_11" targetNode="FCMComposite_1_6" sourceNode="FCMComposite_1_10" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_12" targetNode="FCMComposite_1_10" sourceNode="FCMComposite_1_9" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_23" targetNode="FCMComposite_1_13" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
-      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_29" targetNode="FCMComposite_1_16" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_32" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_36" targetNode="FCMComposite_1_17" sourceNode="FCMComposite_1_16" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_16" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
     </composition>
     <propertyOrganizer/>
     <stickyBoard/>

@@ -1,0 +1,17 @@
+BROKER SCHEMA akp
+CREATE COMPUTE MODULE GetRecords_From_Cache
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- Cache_data has been declared as SHARED row, refering direclty
+		X: BEGIN ATOMIC
+			DECLARE inRef REFERENCE TO CacheData;
+			IF EXISTS (CacheData.[]) THEN
+				SET OutputRoot.JSON.Data.result = inRef;
+			ELSE
+				-- TO DO Instead throwing error call the funtion
+				THROW USER EXCEPTION CATALOG 'ERROR' MESSAGE 3145 VALUES ('No Cached Data');
+			END IF;
+		END X;
+		RETURN TRUE;
+	END;
+END MODULE;

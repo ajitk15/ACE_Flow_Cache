@@ -1,0 +1,6 @@
+BROKER SCHEMA akp
+
+
+CREATE PROCEDURE generateCache(IN ref REFERENCE) X: BEGIN ATOMIC
+	SET CacheData.data = ref;
+END;

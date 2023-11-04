@@ -1,0 +1,20 @@
+BROKER SCHEMA akp
+
+DECLARE CacheData SHARED ROW;
+
+CREATE COMPUTE MODULE Flow_Cache_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+			DECLARE inRef REFERENCE TO InputRoot.JSON.Data;
+			IF NOT EXISTS(Environment.CacheData[]) THEN
+				CALL akp.generateCache(inRef);
+				SET OutputRoot.JSON.Data.message = 'Created cache at '|| CAST(CURRENT_TIMESTAMP AS CHARACTER);
+			ELSE
+				SET OutputRoot.JSON.Data.message = 'Failed to Create Cache';
+			END IF;
+			
+		RETURN TRUE;
+	END;
+
+
+END MODULE;
